@@ -41,7 +41,7 @@ export class FindingsService {
     await AuditService.createLog(userId, role, 'N/A', 'ESCALATE_FINDING', 'observationFindings', findingId, finding, updated);
 
     // Notify supervisors
-    const supervisors = await db.select().from(schema.users).where(eq(schema.users.role, 'supervisor'));
+    const supervisors = await db.select().from(schema.users).where(eq(schema.users.role, 'SUPERVISOR'));
     for (const supervisor of supervisors) {
       await NotificationsService.create(supervisor.id, 'ESCALATION', 'Finding Escalated', `Finding for observation ${finding.observationId} was escalated.`, { findingId });
     }
@@ -52,10 +52,10 @@ export class FindingsService {
   static async listPendingReview(page = 1, limit = 20) {
     const offset = (page - 1) * limit;
     const query = db.select().from(schema.observationFindings)
-      .where(eq(schema.observationFindings.escalationStatus, 'PENDING_REVIEW'))
+      .where(eq(schema.observationFindings.regulatoryDecision, 'PENDING_REVIEW'))
       .limit(limit).offset(offset).orderBy(asc(schema.observationFindings.createdAt));
     
-    const countQuery = db.select({ total: count() }).from(schema.observationFindings).where(eq(schema.observationFindings.escalationStatus, 'PENDING_REVIEW'));
+    const countQuery = db.select({ total: count() }).from(schema.observationFindings).where(eq(schema.observationFindings.regulatoryDecision, 'PENDING_REVIEW'));
     const [data, [{ total }]] = await Promise.all([query, countQuery]);
     return { data, total, page, limit };
   }

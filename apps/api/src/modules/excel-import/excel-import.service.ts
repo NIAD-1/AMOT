@@ -15,7 +15,7 @@ export class ExcelImportService {
     const errorRows = [];
 
     // Map email to user ID
-    const users = await db.select().from(schema.users).where(eq(schema.users.role, 'field_officer'));
+    const users = await db.select().from(schema.users).where(eq(schema.users.role, 'FIELD_OFFICER'));
     const emailToUserId = new Map(users.map(u => [u.email, u.id]));
 
     let rowIndex = 2; // header is 1

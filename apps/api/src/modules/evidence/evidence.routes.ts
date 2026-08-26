@@ -22,7 +22,7 @@ export default async function evidenceRoutes(fastify: FastifyInstance) {
   fastify.post('/upload-url', { preHandler: [authenticate] }, async (request, reply) => {
     try {
       const data = uploadSchema.parse(request.body);
-      const result = await EvidenceService.generateUploadUrl(data);
+      const result = await EvidenceService.generateUploadUrl(data as { fileName: string; mimeType: string });
       return reply.send(result);
     } catch (err: any) {
       return reply.status(400).send({ error: err.message });

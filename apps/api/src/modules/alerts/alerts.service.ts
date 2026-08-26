@@ -14,7 +14,7 @@ export class AlertsService {
     await AuditService.createLog(userId, role, 'N/A', 'CREATE_ALERT', 'surveillanceAlerts', alert.id, null, alert);
 
     // Notify all field officers
-    const fieldOfficers = await db.select().from(schema.users).where(eq(schema.users.role, 'field_officer'));
+    const fieldOfficers = await db.select().from(schema.users).where(eq(schema.users.role, 'FIELD_OFFICER'));
     for (const officer of fieldOfficers) {
       await NotificationsService.create(officer.id, 'ALERT', alert.title, alert.description, { alertId: alert.id });
     }

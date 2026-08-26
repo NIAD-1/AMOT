@@ -28,7 +28,7 @@ export class AuthService {
       email: user.email,
     };
 
-    const token = jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRY });
+    const token = jwt.sign(payload, env.JWT_SECRET, { expiresIn: env.JWT_EXPIRY as any });
 
     const { passwordHash, ...userWithoutPassword } = user;
     return { user: userWithoutPassword, token };

@@ -1,7 +1,6 @@
 import { db } from '../../db';
 import * as schema from '../../db/schema';
 import { eq, count, and, desc, asc, lte, gte } from 'drizzle-orm';
-import { NotificationsService } from '../notifications/notifications.service';
 
 export class NotificationsService {
   static async create(userId: number, type: string, title: string, body: string, metadata?: any) {
