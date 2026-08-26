@@ -8,7 +8,7 @@ const envSchema = z.object({
   NODE_ENV: z.enum(['development', 'production', 'test']).default('production'),
   CORS_ORIGIN: z.string().default('*'),
   
-  DATABASE_URL: z.string().default('postgresql://neondb_owner:npg_ljoY0OFURmd6@ep-late-resonance-ado8573f-pooler.c-2.us-east-1.aws.neon.tech/neondb?sslmode=require'),
+  DATABASE_URL: z.string().default(process.env.DATABASE_URL || ''),
   REDIS_URL: z.string().default('redis://localhost:6379'),
   
   JWT_SECRET: z.string().default('amot-super-secure-production-jwt-key-2026'),
