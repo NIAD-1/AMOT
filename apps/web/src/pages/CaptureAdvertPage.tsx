@@ -1,5 +1,4 @@
-import React, { useState, useRef } from 'react';
-import { Camera, Upload, CheckCircle2, X, Search, ShieldCheck, AlertTriangle, ArrowRight, Database, FileText, Sparkles, ExternalLink, Cloud } from 'lucide-react';
+import { Camera, Upload, CheckCircle2, X, Search, ShieldCheck, AlertTriangle, ArrowRight, Database, FileText, Sparkles, ExternalLink, Cloud, Download } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
 import { useGeolocation } from '../hooks/useGeolocation';
@@ -52,8 +51,12 @@ export const CaptureAdvertPage: React.FC = () => {
     DatabaseQueryService.generatePrefilledUnapprovedForm('', officerName, '')
   );
 
+  const [imagePreviewUrl, setImagePreviewUrl] = useState<string | null>(null);
+
   // Run Real OCR, Automated Database Query & Microsoft OneDrive Vault Upload
   const processCapturedEvidence = async (capturedFile: File) => {
+    const objectUrl = URL.createObjectURL(capturedFile);
+    setImagePreviewUrl(objectUrl);
     setStep(2); // Scanning & OCR Step
 
     // 1. Execute Real OCR Optical Character Recognition
@@ -744,13 +747,62 @@ export const CaptureAdvertPage: React.FC = () => {
             )}
           </p>
 
+          {/* Evidence Vault Card */}
           {oneDriveVaultResult && (
-            <div className="mb-8 p-3 bg-blue-50 border border-blue-200 rounded-xl flex items-center gap-2 text-xs text-blue-900">
-              <Cloud className="w-4 h-4 text-blue-600 flex-shrink-0" />
-              <span>Evidence file saved to OneDrive Vault: <strong className="font-mono">{oneDriveVaultResult.fileName}</strong></span>
-              <a href={oneDriveVaultResult.fileUrl} target="_blank" rel="noreferrer" className="text-blue-700 underline font-semibold ml-2 flex items-center gap-0.5">
-                Open <ExternalLink className="w-3 h-3" />
-              </a>
+            <div className="w-full max-w-lg mb-8 bg-blue-50/70 border border-blue-200 rounded-2xl p-5 text-left shadow-sm">
+              <div className="flex items-center justify-between pb-3 border-b border-blue-200 mb-4">
+                <div className="flex items-center gap-2 text-xs font-bold text-[#1e3a5f] uppercase tracking-wider">
+                  <Cloud className="w-4 h-4 text-blue-600" />
+                  OneDrive Evidence Vault (2026)
+                </div>
+                <span className="px-2 py-0.5 text-[10px] font-semibold bg-green-100 text-green-700 rounded-full border border-green-200">
+                  Ready for Sync
+                </span>
+              </div>
+
+              <div className="flex items-start gap-4 mb-4">
+                {imagePreviewUrl ? (
+                  <img 
+                    src={imagePreviewUrl} 
+                    alt="Captured Evidence" 
+                    className="w-24 h-24 object-cover rounded-xl border border-gray-200 shadow-sm flex-shrink-0" 
+                  />
+                ) : (
+                  <div className="w-24 h-24 bg-gray-100 rounded-xl flex items-center justify-center text-gray-400">
+                    <Camera className="w-6 h-6" />
+                  </div>
+                )}
+
+                <div className="flex-1 min-w-0 space-y-1 text-xs">
+                  <div className="text-gray-500">Vault File Reference:</div>
+                  <div className="font-mono font-bold text-gray-900 truncate bg-white px-2 py-1 rounded border border-gray-200">
+                    {oneDriveVaultResult.fileName}
+                  </div>
+                  <div className="text-gray-500 pt-1">
+                    Path: <span className="font-mono text-gray-700">{oneDriveVaultResult.vaultPath}</span>
+                  </div>
+                </div>
+              </div>
+
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 pt-2 border-t border-blue-100">
+                {imagePreviewUrl && (
+                  <a
+                    href={imagePreviewUrl}
+                    download={oneDriveVaultResult.fileName}
+                    className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-white hover:bg-gray-50 text-[#1e3a5f] text-xs font-semibold rounded-xl border border-gray-300 shadow-sm transition-all text-center"
+                  >
+                    <Download className="w-3.5 h-3.5" /> Download Evidence File
+                  </a>
+                )}
+                <a
+                  href={OneDriveService.getVaultFolderUrl()}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="inline-flex items-center justify-center gap-1.5 px-3 py-2 bg-[#1e3a5f] hover:bg-[#152840] text-white text-xs font-semibold rounded-xl shadow-sm transition-all text-center"
+                >
+                  <ExternalLink className="w-3.5 h-3.5" /> Open OneDrive Vault
+                </a>
+              </div>
             </div>
           )}
 
