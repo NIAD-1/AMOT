@@ -20,11 +20,5 @@
   },
   "dependencies": {
     "xlsx": "^0.18.5"
-  },
-  "pnpm": {
-    "onlyBuiltDependencies": [
-      "esbuild",
-      "tesseract.js"
-    ]
   }
 }

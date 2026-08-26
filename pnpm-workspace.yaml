@@ -1,6 +1,7 @@
 packages:
   - 'packages/*'
   - 'apps/*'
-allowBuilds:
-  esbuild: set this to true or false
-  tesseract.js: set this to true or false
+
+onlyBuiltDependencies:
+  - esbuild
+  - tesseract.js
