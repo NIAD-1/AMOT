@@ -1,0 +1,24 @@
+{
+  "name": "amot",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Advert Monitoring & Observation Tool - Surveillance & Reporting Platform",
+  "scripts": {
+    "dev": "concurrently \"pnpm --filter @amot/api dev\" \"pnpm --filter @amot/web dev\"",
+    "dev:api": "pnpm --filter @amot/api dev",
+    "dev:web": "pnpm --filter @amot/web dev",
+    "build": "pnpm --filter @amot/shared build && pnpm --filter @amot/api build && pnpm --filter @amot/web build",
+    "build:shared": "pnpm --filter @amot/shared build",
+    "db:generate": "pnpm --filter @amot/api db:generate",
+    "db:migrate": "pnpm --filter @amot/api db:migrate",
+    "db:seed": "pnpm --filter @amot/api db:seed",
+    "lint": "pnpm -r lint",
+    "typecheck": "pnpm -r typecheck"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  },
+  "dependencies": {
+    "xlsx": "^0.18.5"
+  }
+}
