@@ -1,6 +1,18 @@
 [build]
-  command = "pnpm --filter @amot/web build"
+  command = "cd apps/web && npx vite build"
   publish = "apps/web/dist"
+
+[[redirects]]
+  from = "/api/*"
+  to = "https://amot-274f.onrender.com/api/:splat"
+  status = 200
+  force = true
+
+[[redirects]]
+  from = "/health"
+  to = "https://amot-274f.onrender.com/health"
+  status = 200
+  force = true
 
 [[redirects]]
   from = "/*"
