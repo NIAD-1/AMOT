@@ -51,7 +51,7 @@ export class ReportsService {
     .leftJoin(schema.napamsApprovals, eq(schema.observationFindings.matchedNapamsId, schema.napamsApprovals.id))
     .where(conditions.length ? and(...conditions) : undefined);
 
-    const stringifier = stringify({ header: true, columns: [
+    const stringifier: any = stringify({ header: true, columns: [
       'Observation Number', 'Captured At', 'Source', 'Medium', 'Location', 'GPS Lat', 'GPS Lng', 
       'Observed Product', 'Observed Manufacturer', 'Officer Name', 'Officer Notes', 'Match Status', 
       'Regulatory Decision', 'Escalation Status', 'NAPAMS Approval No', 'Digital URL'
@@ -94,7 +94,7 @@ export class ReportsService {
   }
 
   static async streamFindingsCsv(filters: any, outputStream: any) {
-    const stringifier = stringify({ header: true });
+    const stringifier: any = stringify({ header: true });
     stringifier.pipe(outputStream);
     const rows = await db.select().from(schema.observationFindings);
     rows.forEach(r => stringifier.write(Object.values(r)));
@@ -102,7 +102,7 @@ export class ReportsService {
   }
 
   static async streamSchedulesCsv(filters: any, outputStream: any) {
-    const stringifier = stringify({ header: true });
+    const stringifier: any = stringify({ header: true });
     stringifier.pipe(outputStream);
     const rows = await db.select().from(schema.monitoringSchedules);
     rows.forEach(r => stringifier.write(Object.values(r)));
@@ -110,7 +110,7 @@ export class ReportsService {
   }
 
   static async streamAuditLogsCsv(filters: any, outputStream: any) {
-    const stringifier = stringify({ header: true });
+    const stringifier: any = stringify({ header: true });
     stringifier.pipe(outputStream);
     const rows = await db.select().from(schema.auditLogs);
     rows.forEach(r => stringifier.write(Object.values(r)));
