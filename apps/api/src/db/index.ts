@@ -1,9 +1,11 @@
-import { neon, neonConfig } from '@neondatabase/serverless';
-import { drizzle } from 'drizzle-orm/neon-http';
-import { env } from '../config';
+import { neon } from '@neondatabase/serverless';
+import { drizzle as drizzleNeon } from 'drizzle-orm/neon-http';
+import { drizzle as drizzlePg } from 'drizzle-orm/postgres-js';
+import postgres from 'postgres';
 import * as schema from './schema';
 
-neonConfig.fetchConnectionCache = true;
+const connectionString = process.env.DATABASE_URL || 'postgres://postgres:postgres@localhost:5432/amot';
 
-const sql = neon(env.DATABASE_URL);
-export const db = drizzle(sql, { schema });
+export const db = connectionString.includes('neon.tech') || connectionString.includes('sslmode=')
+  ? drizzleNeon(neon(connectionString), { schema })
+  : drizzlePg(postgres(connectionString), { schema });
