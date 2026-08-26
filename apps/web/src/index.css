@@ -9,4 +9,44 @@
 
 body {
   background-color: #f8fafc;
+  color: #0f172a;
+  -webkit-tap-highlight-color: transparent;
+  font-feature-settings: 'cv02', 'cv03', 'cv04', 'cv11';
 }
+
+/* Safe Area Insets for iOS & Android */
+.pb-safe {
+  padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
+}
+
+/* Hide Netlify Collaborative Drawer Widget that covers mobile bottom nav */
+#netlify-drawer,
+[data-netlify-drawer],
+[id*="netlify-drawer"],
+iframe[src*="netlify"],
+.netlify-badge,
+[data-netlify-deploy-preview] {
+  display: none !important;
+  visibility: hidden !important;
+  pointer-events: none !important;
+  opacity: 0 !important;
+  width: 0 !important;
+  height: 0 !important;
+}
+
+/* Custom Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: #cbd5e1;
+  border-radius: 9999px;
+}
+::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8;
+}
+

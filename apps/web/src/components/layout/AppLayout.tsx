@@ -72,7 +72,7 @@ export const AppLayout: React.FC = () => {
         </header>
 
         {/* Main Content */}
-        <main className="flex-1 overflow-y-auto p-4 md:p-8 pb-24 md:pb-8">
+        <main className="flex-1 overflow-y-auto p-4 md:p-8 pb-32 md:pb-8">
           <div className="max-w-7xl mx-auto">
             <Outlet />
           </div>
@@ -80,7 +80,7 @@ export const AppLayout: React.FC = () => {
       </div>
 
       {/* Mobile Bottom Nav */}
-      <div className="md:hidden fixed bottom-0 left-0 right-0 z-20">
+      <div className="md:hidden fixed bottom-0 left-0 right-0 z-40">
         <MobileNav />
       </div>
     </div>

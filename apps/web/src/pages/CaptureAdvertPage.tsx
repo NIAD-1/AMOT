@@ -1,3 +1,5 @@
+import { useState, useRef } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Camera, Upload, CheckCircle2, X, Search, ShieldCheck, AlertTriangle, ArrowRight, Database, FileText, Sparkles, ExternalLink, Cloud, Download } from 'lucide-react';
 import { Button } from '../components/ui/Button';
 import { Badge } from '../components/ui/Badge';
@@ -8,6 +10,7 @@ import { DatabaseQueryService } from '../services/dbQueryService';
 import { OneDriveService, OneDriveUploadResult } from '../services/oneDriveService';
 
 export const CaptureAdvertPage: React.FC = () => {
+  const navigate = useNavigate();
   // Steps: 1: Capture, 2: Real OCR & DB Query, 3: Scan Results, 4: Manual Search Fallback, 5: Form Fill, 6: Success
   const [step, setStep] = useState<1 | 2 | 3 | 4 | 5 | 6>(1);
   const [files, setFiles] = useState<File[]>([]);
@@ -806,9 +809,13 @@ export const CaptureAdvertPage: React.FC = () => {
             </div>
           )}
 
-          <div className="flex space-x-4">
-            <Button variant="secondary" onClick={() => reset()}>View All Logs</Button>
-            <Button onClick={reset}>Capture & Check Another</Button>
+          <div className="flex flex-col sm:flex-row gap-3 w-full max-w-lg">
+            <Button variant="secondary" className="w-full sm:flex-1 py-3 text-sm" onClick={() => navigate('/observations')}>
+              View All Logs
+            </Button>
+            <Button className="w-full sm:flex-1 py-3 text-sm font-semibold bg-[#1e3a5f] hover:bg-[#152840]" onClick={reset}>
+              Capture & Check Another
+            </Button>
           </div>
         </div>
       )}
