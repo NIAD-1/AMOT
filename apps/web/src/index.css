@@ -19,19 +19,30 @@ body {
   padding-bottom: max(0.75rem, env(safe-area-inset-bottom));
 }
 
-/* Hide Netlify Collaborative Drawer Widget that covers mobile bottom nav */
+/* Hide Netlify Collaborative Drawer & Feedback Widget that covers mobile bottom nav */
 #netlify-drawer,
+#netlify-drawer-container,
 [data-netlify-drawer],
-[id*="netlify-drawer"],
+[id*="netlify"],
+[class*="netlify"],
 iframe[src*="netlify"],
+iframe[title*="Netlify"],
 .netlify-badge,
-[data-netlify-deploy-preview] {
+[data-netlify-badge],
+[data-netlify-deploy-preview],
+netlify-drawer,
+aside[id*="netlify"],
+div[id*="netlify"] {
   display: none !important;
   visibility: hidden !important;
   pointer-events: none !important;
   opacity: 0 !important;
   width: 0 !important;
   height: 0 !important;
+  position: absolute !important;
+  top: -9999px !important;
+  left: -9999px !important;
+  z-index: -9999 !important;
 }
 
 /* Custom Sleek Scrollbar */
