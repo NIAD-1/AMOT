@@ -39,8 +39,18 @@ app.register(napamsRoutes, { prefix: '/api/napams' });
 app.register(notificationsRoutes, { prefix: '/api/notifications' });
 app.register(reportsRoutes, { prefix: '/api/reports' });
 
+app.get('/', async () => {
+  return {
+    name: 'AMOT API - Advert Monitoring & Observation Platform',
+    status: 'online',
+    version: '1.0.0',
+    health: '/health',
+    endpoints: '/api'
+  };
+});
+
 app.get('/health', async () => {
-  return { status: 'ok' };
+  return { status: 'ok', timestamp: new Date().toISOString() };
 });
 
 export default app;
